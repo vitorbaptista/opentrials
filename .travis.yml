@@ -8,7 +8,7 @@ cache:
     - node_modules
     - .nvm
 before_script: touch .env
-script: npm run coveralls
+script: npm run coverage
 
 before_deploy:
   - pip install docker-cloud
