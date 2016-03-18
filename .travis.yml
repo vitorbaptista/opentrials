@@ -11,10 +11,13 @@ before_script: touch .env
 script: npm run coveralls
 
 before_deploy:
+  - pip install docker-cloud
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - docker build -t opentrials/opentrials:$TRAVIS_COMMIT .
+  - docker push opentrials/opentrials
 deploy:
   provider: script
-  script: docker push opentrials/opentrials
+  script: docker-cloud up
   on:
     condition: "$TRAVIS_PULL_REQUEST == false"
     branch: master
